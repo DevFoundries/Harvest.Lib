@@ -30,5 +30,11 @@ namespace ProduceForHarvest.Design
 		{
 			return Task.FromResult(new List<Projects>());
 		}
+
+		public Task<Project> Project(int projectId)
+		{
+			return Task.FromResult(new Project());
+		}
+
 	}
 }

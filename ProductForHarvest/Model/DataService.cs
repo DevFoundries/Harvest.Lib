@@ -43,6 +43,13 @@ namespace ProduceForHarvest.Model
 			WBSimms.Harvest.Harvest h = new WBSimms.Harvest.Harvest(config);
 			return Task.FromResult(h.Projects());
 		}
+
+		public Task<Project> Project(int projectId)
+		{
+			WBSimms.Harvest.Harvest h = new WBSimms.Harvest.Harvest(config);
+			return Task.FromResult(h.Project(projectId));
+		}
+
 	}
 
 }

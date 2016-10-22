@@ -58,8 +58,8 @@ namespace WBSimms.Harvest
 		public Project Project(int projectId)
 		{
 			var result = httpClient.GetStringAsync("/projects/"+projectId).Result;
-			var retval = JsonConvert.DeserializeObject<Project>(result);
-			return retval;
+			var retval = JsonConvert.DeserializeObject<Projects>(result);
+			return retval.Project;
 		}
 
 

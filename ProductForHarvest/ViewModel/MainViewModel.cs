@@ -29,9 +29,10 @@ namespace ProduceForHarvest.ViewModel
 			try
 			{
 				var item = await _dataService.GetData();
-				var whoami = await _dataService.WhoAmI();
-				var daily = await _dataService.Daily();
-				var projects = await _dataService.Projects();
+				//var whoami = await _dataService.WhoAmI();
+				//var daily = await _dataService.Daily();
+				//var projects = await _dataService.Projects();
+				var project = await _dataService.Project(11851765);
 			}
 			catch (Exception ex)
 			{

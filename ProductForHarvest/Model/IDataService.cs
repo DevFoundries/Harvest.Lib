@@ -11,5 +11,6 @@ namespace ProduceForHarvest.Model
 		Task<WhoAmI> WhoAmI();
 		Task<Daily> Daily();
 		Task<List<Projects>> Projects();
+		Task<Project> Project(int projectId);
 	}
 }
