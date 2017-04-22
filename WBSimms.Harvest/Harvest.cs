@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Web.Http;
 using Harvest.Lib;
 using Newtonsoft.Json;
 using WBSimms.Harvest.Models;
+using HttpClient = System.Net.Http.HttpClient;
 
 namespace WBSimms.Harvest
 {
@@ -17,6 +18,9 @@ namespace WBSimms.Harvest
 		Daily Daily();
 		Project Project(int projectId);
 		List<Projects> Projects();
+		Daily Daily(int dayOfYear, int year);
+		Daily DailySlim();
+
 	}
 
 	public class Harvest : IHarvest
@@ -48,6 +52,23 @@ namespace WBSimms.Harvest
 			return retval;
 		}
 
+		public Daily DailySlim()
+		{
+			var result = httpClient.GetStringAsync("/daily?slim=1").Result;
+			var retval = JsonConvert.DeserializeObject<Daily>(result);
+			return retval;
+		}
+
+		public Daily Daily(int dayOfYear, int year)
+		{
+			if (dayOfYear < 1 || dayOfYear > 366) throw new ArgumentException("dayofYear");
+			var result = httpClient.GetStringAsync("/daily/"+dayOfYear+"/"+year).Result;
+			var retval = JsonConvert.DeserializeObject<Daily>(result);
+			return retval;
+		}
+
+
+
 		public List<Projects> Projects()
 		{
 			var result = httpClient.GetStringAsync("/projects").Result;
@@ -62,6 +83,12 @@ namespace WBSimms.Harvest
 			return retval.Project;
 		}
 
+		public Daily DailyAdd(Daily daily)
+		{
+			var result = httpClient.PostAsync("daily/add", new System.Net.Http.StringContent(JsonConvert.SerializeObject(daily))).Result;
+			var retval = JsonConvert.DeserializeObject<Daily>(result.Content.ReadAsStringAsync().Result);
+			return retval;
+		}
 
 	}
 }
